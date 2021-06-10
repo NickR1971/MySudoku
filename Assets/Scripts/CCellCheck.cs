@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CCellCheck : MonoBehaviour
 {
     private RectTransform cellRT;
+    private Text txt;
     private GameObject[] hints;
     private bool[] freeNums;
     private static int cellCounter = 0;
@@ -31,6 +33,7 @@ public class CCellCheck : MonoBehaviour
         if (am == null) Debug.Log("ApplicationManager not found!");
         appManager=am.GetComponent<ApplicationManager>();
         cellRT = GetComponent<RectTransform>();
+        txt = GetComponent<Text>();
         cellNum = cellCounter++;
         if (cellNum == 0) startPosition = cellRT.position;
         else
@@ -45,6 +48,8 @@ public class CCellCheck : MonoBehaviour
         freeNums = new bool[10];
         for (i = 0; i < 10; i++) freeNums[i] = false;
 
+        appManager.RegistryCell(this, cellNum);
+
         hints = new GameObject[9];
         for (i = 0; i < 9; i++)
         {
@@ -53,12 +58,12 @@ public class CCellCheck : MonoBehaviour
         ViewHints();
     }
 
+    public void SetValue(int _num)
+    {
+            txt.text = "" + _num;
+    }
+
     void Update()
     {
-        if (appManager.GetChangedCell() == cellNum)
-        {
-            Debug.Log("Enter cell: " + cellNum);
-            appManager.ResetChangeCell();
-        }
     }
 }

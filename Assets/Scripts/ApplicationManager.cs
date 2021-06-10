@@ -10,31 +10,37 @@ public class ApplicationManager : MonoBehaviour
 	private int pointerX = 1;
 	private int pointerY = 1;
     private int activeCellNum;
-    private int changedCell;
     private const float step = 42.5f;
     private int[] map;
+	private CCellCheck[] cellList;
 
+
+    private void Awake()
+    {
+     int i;
+
+		cellList = new CCellCheck[81];
+        map = new int[81];
+        for (i = 0; i < 81; i++) map[i] = 0;
+        activeCellNum = 0;
+    }
     /// /////////////////////////////
     /// Start initialization
 	private void Start()
     {
-     int i;
 
 		pointerRT = pointer.GetComponent<RectTransform>();
 		startPointerPosition = pointerRT.position;
-        map = new int[81];
-        for (i = 0; i < 81; i++) map[i] = 0;
-        activeCellNum = 0;
-        changedCell = -1;
+    }
+
+	public void RegistryCell(CCellCheck _cell, int _index)
+    {
+		cellList[_index] = _cell;
     }
 
     public float GetStep() { return step; }
 
     public int GetMapValue(int _index) { return map[_index]; }
-
-    public int GetChangedCell() { return changedCell; }
-
-    public void ResetChangeCell() { changedCell = -1; }
 
     private void SetPointerPosition()
     {
@@ -70,11 +76,14 @@ public class ApplicationManager : MonoBehaviour
 		pointerX++;
 		SetPointerPosition();
 	}
-	public void pressNum(int _num)
+
+	public void PressNum(int _num)
     {
 		//Debug.Log(_num);
-        map[changedCell = activeCellNum] = _num;
+        map[activeCellNum] = _num;
+		cellList[activeCellNum].SetValue(_num);
     }
+
 	public void Quit () 
 	{
 		#if UNITY_EDITOR
