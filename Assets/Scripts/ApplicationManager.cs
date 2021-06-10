@@ -13,6 +13,7 @@ public class ApplicationManager : MonoBehaviour
     private const float step = 42.5f;
     private int[] map;
 	private CCellCheck[] cellList;
+	private int refreshAction;
 
 
     private void Awake()
@@ -23,12 +24,12 @@ public class ApplicationManager : MonoBehaviour
         map = new int[81];
         for (i = 0; i < 81; i++) map[i] = 0;
         activeCellNum = 0;
+		refreshAction = 0;
     }
     /// /////////////////////////////
     /// Start initialization
 	private void Start()
     {
-
 		pointerRT = pointer.GetComponent<RectTransform>();
 		startPointerPosition = pointerRT.position;
     }
@@ -41,6 +42,9 @@ public class ApplicationManager : MonoBehaviour
     public float GetStep() { return step; }
 
     public int GetMapValue(int _index) { return map[_index]; }
+
+	public int GetRefresh() { return refreshAction; }
+	public void DoneRefresh() { refreshAction--; }
 
     private void SetPointerPosition()
     {
@@ -80,8 +84,11 @@ public class ApplicationManager : MonoBehaviour
 	public void PressNum(int _num)
     {
 		//Debug.Log(_num);
-        map[activeCellNum] = _num;
-		cellList[activeCellNum].SetValue(_num);
+		if (cellList[activeCellNum].SetValue(_num))
+		{
+			map[activeCellNum] = _num;
+			refreshAction = 81;
+		}
     }
 
 	public void Quit () 
