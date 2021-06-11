@@ -129,7 +129,7 @@ public class ApplicationManager : MonoBehaviour
         }
 		bf.Serialize(file, data);
 		file.Close();
-		Debug.Log("Save...");
+		Debug.Log("Save to " + Application.persistentDataPath + "/MySaveData.dat");
     }
 
 	public void Load()
@@ -157,6 +157,20 @@ public class ApplicationManager : MonoBehaviour
 		}
 		else
 			Debug.LogError("There is no save data!");
+	}
+
+	public void ResetData()
+    {
+		if (File.Exists(Application.persistentDataPath
+			  + "/MySaveData.dat"))
+		{
+			File.Delete(Application.persistentDataPath
+							  + "/MySaveData.dat");
+			Debug.Log("Data reset complete!");
+		}
+		else
+			Debug.LogError("No save data to delete.");
+
 	}
 
 	public void Quit () 
