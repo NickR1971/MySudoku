@@ -1,6 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
+[Serializable]
+class SaveData
+{
+	public int[] map = new int[81];
+}
 
 public class ApplicationManager : MonoBehaviour
 {
@@ -108,12 +117,46 @@ public class ApplicationManager : MonoBehaviour
 
 	public void Save()
     {
+	 int i;
+
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(Application.persistentDataPath
+					 + "/MySaveData.dat");
+		SaveData data = new SaveData();
+		for (i = 0; i < 81; i++)
+        {
+			data.map[i] = map[i];
+        }
+		bf.Serialize(file, data);
+		file.Close();
 		Debug.Log("Save...");
     }
 
 	public void Load()
 	{
-		Debug.Log("Load...");
+	 int i;
+
+		if (File.Exists(Application.persistentDataPath
+					   + "/MySaveData.dat"))
+		{
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file =
+					   File.Open(Application.persistentDataPath
+					   + "/MySaveData.dat", FileMode.Open);
+			SaveData data = (SaveData)bf.Deserialize(file);
+			for (i = 0; i < 81; i++)
+            {
+				if (cellList[i].SetValue(data.map[i]))
+				{
+					map[i] = data.map[i];
+				}
+			}
+			file.Close();
+			refreshAction = 81;
+			Debug.Log("Game data loaded!");
+		}
+		else
+			Debug.LogError("There is no save data!");
 	}
 
 	public void Quit () 
