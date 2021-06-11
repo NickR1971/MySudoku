@@ -28,10 +28,18 @@ public class CCellCheck : MonoBehaviour
             freeNums[appManager.GetMapValue(column[i])] = false;
             freeNums[appManager.GetMapValue(square[i])] = false;
         }
+        freeNums[0] = true;
         for (i = 0; i < 9; i++)
         {
             hints[i].SetActive(freeNums[i+1] && cellValue==0);
         }
+    }
+
+    public void ResetNums()
+    {
+     int i;
+
+        for (i = 0; i < 10; i++) freeNums[i] = true;
     }
 
     void Start()

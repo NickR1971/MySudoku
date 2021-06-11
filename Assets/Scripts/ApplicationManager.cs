@@ -26,8 +26,7 @@ public class ApplicationManager : MonoBehaviour
         activeCellNum = 0;
 		refreshAction = 0;
     }
-    /// /////////////////////////////
-    /// Start initialization
+
 	private void Start()
     {
 		pointerRT = pointer.GetComponent<RectTransform>();
@@ -39,11 +38,14 @@ public class ApplicationManager : MonoBehaviour
 		cellList[_index] = _cell;
     }
 
+	public CCellCheck GetCell(int _index) { return cellList[_index]; }
+
     public float GetStep() { return step; }
 
     public int GetMapValue(int _index) { return map[_index]; }
 
 	public int GetRefresh() { return refreshAction; }
+
 	public void DoneRefresh() { refreshAction--; }
 
     private void SetPointerPosition()
@@ -55,6 +57,7 @@ public class ApplicationManager : MonoBehaviour
 		pointerRT.position = startPointerPosition + pos;
         activeCellNum = (pointerY - 1) * 9 + (pointerX - 1);
     }
+	
 	public void UpPointer()
     {
 		if (pointerY == 1) return;
@@ -62,18 +65,21 @@ public class ApplicationManager : MonoBehaviour
 		SetPointerPosition();
 
 	}
+	
 	public void DownPointer()
 	{
 		if (pointerY == 9) return;
 		pointerY++;
 		SetPointerPosition();
 	}
+	
 	public void LeftPointer()
 	{
 		if (pointerX == 1) return;
 		pointerX--;
 		SetPointerPosition();
 	}
+	
 	public void RightPointer()
 	{
 		if (pointerX == 9) return;
@@ -83,13 +89,32 @@ public class ApplicationManager : MonoBehaviour
 
 	public void PressNum(int _num)
     {
-		//Debug.Log(_num);
 		if (cellList[activeCellNum].SetValue(_num))
 		{
 			map[activeCellNum] = _num;
 			refreshAction = 81;
 		}
     }
+
+	public void ResetHints()
+    {
+	 int i;
+
+		for (i = 0; i < 81; i++)
+        {
+			cellList[i].ResetNums();
+        }
+    }
+
+	public void Save()
+    {
+		Debug.Log("Save...");
+    }
+
+	public void Load()
+	{
+		Debug.Log("Load...");
+	}
 
 	public void Quit () 
 	{
