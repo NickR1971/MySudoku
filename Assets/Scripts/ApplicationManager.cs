@@ -62,6 +62,15 @@ public class ApplicationManager : MonoBehaviour
         activeCellNum = (pointerY - 1) * 9 + (pointerX - 1);
     }
 	
+	public void SetPointerPosition(int _cell)
+    {
+		pointerX = _cell % 9;
+		pointerY = _cell / 9;
+		pointerX++;
+		pointerY++;
+		SetPointerPosition();
+	}
+
 	public void UpPointer()
     {
 		if (pointerY == 1) return;
