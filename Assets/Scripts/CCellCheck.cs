@@ -31,18 +31,25 @@ public class CCellCheck : MonoBehaviour, IPointerClickHandler
 
     public void ResetNums()
     {
-     int i;
+        int i;
 
         for (i = 0; i < 10; i++) freeNums[i] = true;
     }
 
+    public void Check1()
+    {
+        int n = cellData.Check1();
+        if (n != 0) SetValue(n);
+    }
+
     void Start()
     {
-     int i, x, y;
+        int i, x, y;
 
         appManager = FindObjectOfType<ApplicationManager>();
         if (appManager == null) Debug.Log("ApplicationManager not found!");
         appManager.refresh += ViewHints;
+        appManager.check1 += Check1;
         
         cellRT = GetComponent<RectTransform>();
         txt = GetComponent<Text>();

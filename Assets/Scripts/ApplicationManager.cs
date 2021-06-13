@@ -23,6 +23,7 @@ public class ApplicationManager : MonoBehaviour
     private int[] map;
 	private CCellCheck[] cellList;
 	public event Action refresh;
+	public event Action check1;
 
 
     private void Awake()
@@ -117,6 +118,12 @@ public class ApplicationManager : MonoBehaviour
         {
 			cellList[i].ResetNums();
         }
+    }
+
+	public void Check1()
+    {
+		check1?.Invoke();
+		refresh?.Invoke();
     }
 
 	public void Save()

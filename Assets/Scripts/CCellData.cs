@@ -88,4 +88,56 @@ public class CCellData
 
         freeNums[0] = b;
     }
+
+    private int CheckGroup(int[] a)
+    {
+        int i, n, cnt, rt;
+
+        rt = 0;
+        for(n=1;n<10;n++)
+        {
+            if(freeNums[n])
+            {
+                cnt = 0;
+                for (i = 0; i < 9; i++) if (cellList[a[i]].freeNums[n]) cnt++;
+                if (cnt == 1) rt = n;
+            }
+            if (rt != 0) break;
+        }
+
+        return rt;
+    }
+
+    public int Check1()
+    {
+        int i, n;
+
+        n = 0;
+        if (value != 0) return n;
+
+        for (i = 1; i < 10; i++)
+        {
+            if (freeNums[i]) n++;
+        }
+        
+        if (n == 1)
+        {
+            for (i = 1; i < 10; i++)
+            {
+                if(freeNums[i])
+                {
+                    n = i;
+                    break;
+                }
+            }
+            return n;
+        }
+
+        n = CheckGroup(row);
+        if (n != 0) return n;
+        n = CheckGroup(column);
+        if (n != 0) return n;
+        n = CheckGroup(square);
+        return n;
+    }
 }
