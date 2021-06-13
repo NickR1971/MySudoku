@@ -19,7 +19,7 @@ public class ApplicationManager : MonoBehaviour
 	private int pointerX = 1;
 	private int pointerY = 1;
     private int activeCellNum;
-    private const float step = 42.5f;
+    private const float step = 32.0f;
     private int[] map;
 	private CCellCheck[] cellList;
 	private int refreshAction;
@@ -39,7 +39,7 @@ public class ApplicationManager : MonoBehaviour
 	private void Start()
     {
 		pointerRT = pointer.GetComponent<RectTransform>();
-		startPointerPosition = pointerRT.position;
+		startPointerPosition = pointerRT.localPosition;
     }
 
 	public void RegistryCell(CCellCheck _cell, int _index)
@@ -63,7 +63,7 @@ public class ApplicationManager : MonoBehaviour
 		float py = pointerY-1;
 		Vector3 pos = new Vector3(px * step, -py * step, 0);
 
-		pointerRT.position = startPointerPosition + pos;
+		pointerRT.localPosition = startPointerPosition + pos;
         activeCellNum = (pointerY - 1) * 9 + (pointerX - 1);
     }
 	

@@ -45,17 +45,22 @@ public class CCellCheck : MonoBehaviour
     void Start()
     {
      int i, x, y;
-     GameObject am;
+    // GameObject am;
      
-        am = GameObject.Find("ApplicationManager");
-        if (am == null) Debug.Log("ApplicationManager not found!");
-        appManager=am.GetComponent<ApplicationManager>();
+        //am = GameObject.Find("ApplicationManager");
+       // if (am == null) Debug.Log("ApplicationManager not found!");
+        //appManager=am.GetComponent<ApplicationManager>();
+
+        appManager = FindObjectOfType<ApplicationManager>();
+        if (appManager == null) Debug.Log("ApplicationManager not found!");
+        
         cellRT = GetComponent<RectTransform>();
         txt = GetComponent<Text>();
         cellNum = cellCounter++;
         if (cellNum == 0)
         {
-            startPosition = cellRT.position;
+            //startPosition = cellRT.position;
+            startPosition = cellRT.localPosition;
             x = y = 0;
         }
         else
@@ -64,7 +69,7 @@ public class CCellCheck : MonoBehaviour
             x = cellNum % 9;
             y = cellNum / 9;
             Vector3 pos = new Vector3(step * x, -step * y, 0);
-            cellRT.position = startPosition + pos;
+            cellRT.localPosition = startPosition + pos;
         }
 
         freeNums = new bool[10];
