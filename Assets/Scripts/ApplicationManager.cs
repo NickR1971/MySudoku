@@ -22,7 +22,7 @@ public class ApplicationManager : MonoBehaviour
     private const float step = 32.0f;
     private int[] map;
 	private CCellCheck[] cellList;
-	private int refreshAction;
+	public event Action refresh;
 
 
     private void Awake()
@@ -33,7 +33,6 @@ public class ApplicationManager : MonoBehaviour
         map = new int[81];
         for (i = 0; i < 81; i++) map[i] = 0;
         activeCellNum = 0;
-		refreshAction = 0;
     }
 
 	private void Start()
@@ -52,10 +51,6 @@ public class ApplicationManager : MonoBehaviour
     public float GetStep() { return step; }
 
     public int GetMapValue(int _index) { return map[_index]; }
-
-	public int GetRefresh() { return refreshAction; }
-
-	public void DoneRefresh() { refreshAction--; }
 
     private void SetPointerPosition()
     {
@@ -101,7 +96,7 @@ public class ApplicationManager : MonoBehaviour
 		if (cellList[activeCellNum].SetValue(_num))
 		{
 			map[activeCellNum] = _num;
-			refreshAction = 81;
+			refresh?.Invoke();
 		}
     }
 
@@ -152,7 +147,7 @@ public class ApplicationManager : MonoBehaviour
 				}
 			}
 			file.Close();
-			refreshAction = 81;
+			refresh?.Invoke();
 			Debug.Log("Game data loaded!");
 		}
 		else

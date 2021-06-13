@@ -45,14 +45,10 @@ public class CCellCheck : MonoBehaviour
     void Start()
     {
      int i, x, y;
-    // GameObject am;
-     
-        //am = GameObject.Find("ApplicationManager");
-       // if (am == null) Debug.Log("ApplicationManager not found!");
-        //appManager=am.GetComponent<ApplicationManager>();
 
         appManager = FindObjectOfType<ApplicationManager>();
         if (appManager == null) Debug.Log("ApplicationManager not found!");
+        appManager.refresh += ViewHints;
         
         cellRT = GetComponent<RectTransform>();
         txt = GetComponent<Text>();
@@ -114,14 +110,5 @@ public class CCellCheck : MonoBehaviour
         if (_num != 0) txt.text = "" + _num;
         else txt.text = " ";
         return true;
-    }
-
-    void Update()
-    {
-        if (appManager.GetRefresh() > 0)
-        {
-            ViewHints();
-            appManager.DoneRefresh();
-        }
     }
 }
