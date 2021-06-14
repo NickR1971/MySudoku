@@ -91,6 +91,12 @@ public class CCellCheck : MonoBehaviour, IPointerClickHandler
         else txt.text = " ";
         return true;
     }
+
+    public bool IsFreeNum(int _num)
+    {
+        return freeNums[_num];
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         appManager.SetPointerPosition(cellNum);

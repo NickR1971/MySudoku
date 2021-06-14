@@ -14,6 +14,7 @@ class SaveData
 public class ApplicationManager : MonoBehaviour
 {
 	[SerializeField] private Image pointer;
+	[SerializeField] private GameObject[] numButtons = new GameObject[9];
 	private Vector3 startPointerPosition;
 	private RectTransform pointerRT;
 	private int pointerX = 1;
@@ -55,12 +56,18 @@ public class ApplicationManager : MonoBehaviour
 
     private void SetPointerPosition()
     {
+		int i;
 		float px = pointerX-1;
 		float py = pointerY-1;
 		Vector3 pos = new Vector3(px * step, -py * step, 0);
 
 		pointerRT.localPosition = startPointerPosition + pos;
         activeCellNum = (pointerY - 1) * 9 + (pointerX - 1);
+
+		for (i = 0; i < 9; i++)
+        {
+			numButtons[i].GetComponent<Button>().interactable = cellList[activeCellNum].IsFreeNum(i + 1);
+		}
     }
 	
 	public void SetPointerPosition(int _cell)

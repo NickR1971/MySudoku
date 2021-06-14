@@ -4462,6 +4462,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 1140885254}
+  numButtons:
+  - {fileID: 452143647}
+  - {fileID: 828893}
+  - {fileID: 484742656}
+  - {fileID: 1924623413}
+  - {fileID: 251690593}
+  - {fileID: 1764795751}
+  - {fileID: 1317792518}
+  - {fileID: 12548496}
+  - {fileID: 1118506733}
 --- !u!4 &624694884
 Transform:
   m_ObjectHideFlags: 0
